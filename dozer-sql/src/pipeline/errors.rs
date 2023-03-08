@@ -9,6 +9,8 @@ use dozer_types::thiserror::Error;
 use dozer_types::types::{Field, FieldType, Record};
 use std::fmt::{Display, Formatter};
 
+use super::product::join::JoinLookupKey;
+
 #[derive(Debug, Clone)]
 pub struct FieldTypes {
     types: Vec<FieldType>,
@@ -190,10 +192,8 @@ pub enum JoinError {
     #[error("History unavailable for JOIN source [{0}]")]
     HistoryUnavailable(u16),
 
-    #[error(
-        "Record with key: {0:x?} version: {1} not available in History for JOIN source[{2}]\n{3}"
-    )]
-    HistoryRecordNotFound(Vec<u8>, u32, u16, dozer_core::errors::ExecutionError),
+    #[error("Record with key: {0:x?} not available for JOIN source[{1}]")]
+    HistoryRecordNotFound(u64, u16),
 
     #[error("Error inserting key: {0:x?} value: {1:x?} in the JOIN index\n{2}")]
     IndexPutError(Vec<u8>, Vec<u8>, StorageError),
@@ -203,6 +203,12 @@ pub enum JoinError {
 
     #[error("Error reading key: {0:x?} from the JOIN index\n")]
     IndexGetError(Vec<u8>),
+
+    #[error("Invalid Lookup key: {0:x?} for JOIN source[{1}]")]
+    InvalidLookupKey(JoinLookupKey, u16),
+
+    #[error("Invalid Join key: {0:x?} for JOIN clause")]
+    InvalidJoinKey(JoinLookupKey),
 }
 
 #[derive(Error, Debug)]

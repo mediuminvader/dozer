@@ -21,7 +21,8 @@ use crate::pipeline::{
 use sqlparser::ast::Expr as SqlExpr;
 
 use super::{
-    join::{JoinOperator, JoinOperatorType, JoinSource, JoinTable},
+    join::{JoinOperator, JoinOperatorType, JoinSource},
+    join_table::JoinTable,
     processor::FromProcessor,
 };
 
