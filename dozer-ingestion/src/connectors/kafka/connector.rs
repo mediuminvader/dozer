@@ -1,4 +1,4 @@
-use crate::connectors::{Connector, SourceSchema, SourceSchemaResult, TableIdentifier};
+use crate::connectors::{Connector, IngestType, SourceSchema, SourceSchemaResult, TableIdentifier};
 use crate::ingestion::Ingestor;
 use crate::{connectors::TableInfo, errors::ConnectorError};
 use dozer_types::ingestion_types::KafkaConfig;
@@ -81,7 +81,7 @@ impl Connector for KafkaConnector {
                 schema: table.schema,
                 name: table.name,
                 column_names,
-                ingest_type,
+                ingest_type: IngestType::default(),
             });
         }
         Ok(result)

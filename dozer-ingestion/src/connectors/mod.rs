@@ -9,11 +9,12 @@ pub mod postgres;
 use crate::connectors::postgres::connection::helper::map_connection_config;
 
 use std::fmt::Debug;
+use std::str::FromStr;
 
 #[cfg(feature = "kafka")]
 use crate::connectors::kafka::connector::KafkaConnector;
 use crate::connectors::postgres::connector::{PostgresConfig, PostgresConnector};
-use crate::errors::ConnectorError;
+use crate::errors::{ConfigurationError, ConnectorError};
 use crate::ingestion::Ingestor;
 
 use dozer_types::log::debug;
@@ -159,9 +160,6 @@ pub struct TableInfo {
     pub name: String,
     /// The column names to be mapped.
     pub column_names: Vec<String>,
-    #[serde(default)]
-    /// Ingestion type
-    pub ingest_type: IngestType,
 }
 
 #[derive(Clone, Copy, Serialize, Deserialize, Debug, Eq, PartialEq, Default)]
@@ -171,6 +169,19 @@ pub enum IngestType {
     AppendOnly,
     MasterFull,
     MasterIncremental,
+}
+
+impl FromStr for IngestType {
+    type Err = ConfigurationError;
+
+    fn from_str(str: &str) -> Result<Self, Self::Err> {
+        match str {
+            "AppendOnly" | "append_only" | "appendOnly" | "" => Ok(IngestType::AppendOnly),
+            "MasterFull" | "master_full" | "masterFull" => Ok(IngestType::MasterFull),
+            "MasterIncremental" | "master_incremental" | "masterIncremental" => Ok(IngestType::MasterIncremental),
+            &_ => Err(ConfigurationError::WrongConnectionConfiguration),
+        }
+    }
 }
 
 pub fn get_connector(connection: Connection) -> Result<Box<dyn Connector>, ConnectorError> {

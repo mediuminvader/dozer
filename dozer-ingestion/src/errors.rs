@@ -457,4 +457,7 @@ pub enum ObjectStoreTableReaderError {
 
     #[error("Stream execution failed: {0}")]
     StreamExecutionError(DataFusionError),
+
+    #[error("Missing table ingestion details")]
+    MissingTableDataIngestionDetails,
 }

@@ -1,6 +1,6 @@
 use crate::connectors::postgres::connection::validator::validate_connection;
 use crate::connectors::postgres::iterator::PostgresIterator;
-use crate::connectors::{Connector, IngestType, ListOrFilterColumns, SourceSchemaResult, TableIdentifier, TableInfo};
+use crate::connectors::{Connector, ListOrFilterColumns, SourceSchemaResult, TableIdentifier, TableInfo};
 use crate::errors::ConnectorError;
 use crate::ingestion::Ingestor;
 use dozer_types::tracing::info;
@@ -133,7 +133,6 @@ impl Connector for PostgresConnector {
                 schema: Some(table.schema),
                 name: table.name,
                 column_names: table.columns,
-                ingest_type: IngestType::default(),
             })
             .collect())
     }

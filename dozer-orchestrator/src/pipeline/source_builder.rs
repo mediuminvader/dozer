@@ -1,7 +1,7 @@
 use crate::pipeline::connector_source::ConnectorSourceFactory;
 use crate::OrchestrationError;
 use dozer_core::appsource::{AppSource, AppSourceManager};
-use dozer_ingestion::connectors::{IngestType, TableInfo};
+use dozer_ingestion::connectors::TableInfo;
 use dozer_sql::pipeline::builder::SchemaSQLContext;
 
 use dozer_types::indicatif::MultiProgress;
@@ -61,7 +61,6 @@ impl<'a> SourceBuilder<'a> {
                         schema: source.schema.clone(),
                         name: source.table_name.clone(),
                         column_names: source.columns.clone(),
-                        ingest_type: IngestType::default(),
                     },
                     port,
                 ));

@@ -2,7 +2,7 @@ use dozer_core::channels::SourceChannelForwarder;
 use dozer_core::errors::ExecutionError::InternalError;
 use dozer_core::errors::{ExecutionError, SourceError};
 use dozer_core::node::{OutputPortDef, OutputPortType, PortHandle, Source, SourceFactory};
-use dozer_ingestion::connectors::{get_connector, CdcType, Connector, TableInfo, IngestType};
+use dozer_ingestion::connectors::{get_connector, CdcType, Connector, TableInfo};
 use dozer_ingestion::errors::ConnectorError;
 use dozer_ingestion::ingestion::{IngestionConfig, IngestionIterator, Ingestor};
 use dozer_sql::pipeline::builder::SchemaSQLContext;
@@ -180,7 +180,6 @@ impl SourceFactory<SchemaSQLContext> for ConnectorSourceFactory {
                 schema: table.schema_name.clone(),
                 name: table.name.clone(),
                 column_names: table.columns.clone(),
-                ingest_type: IngestType::default(),
             })
             .collect();
 

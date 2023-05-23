@@ -3,7 +3,7 @@ use tonic::async_trait;
 use crate::connectors::object_store::adapters::DozerObjectStore;
 use crate::connectors::object_store::schema_mapper;
 use crate::connectors::object_store::table_reader::{Reader, TableReader};
-use crate::connectors::{Connector, IngestType, ListOrFilterColumns, SourceSchemaResult, TableIdentifier, TableInfo};
+use crate::connectors::{Connector, ListOrFilterColumns, SourceSchemaResult, TableIdentifier, TableInfo};
 use crate::errors::ConnectorError;
 use crate::ingestion::Ingestor;
 
@@ -67,7 +67,6 @@ impl<T: DozerObjectStore> Connector for ObjectStoreConnector<T> {
                 schema: table.schema,
                 name: table.name,
                 column_names,
-                ingest_type: IngestType::default(),
             };
             result.push(table_info);
         }

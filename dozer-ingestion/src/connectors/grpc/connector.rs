@@ -3,7 +3,7 @@ use std::path::Path;
 
 use super::adapter::{GrpcIngestor, IngestAdapter};
 use super::ingest::IngestorServiceImpl;
-use crate::connectors::{table_name, SourceSchema, SourceSchemaResult, TableIdentifier, IngestType};
+use crate::connectors::{table_name, SourceSchema, SourceSchemaResult, TableIdentifier};
 use crate::{
     connectors::{Connector, TableInfo},
     errors::ConnectorError,
@@ -189,7 +189,6 @@ where
                     schema: table.schema,
                     name: table.name,
                     column_names,
-                    ingest_type: IngestType::default(),
                 })
             } else {
                 return Err(ConnectorError::TableNotFound(table_name(

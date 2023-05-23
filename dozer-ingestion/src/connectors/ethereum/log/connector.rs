@@ -1,9 +1,7 @@
 use std::collections::HashMap;
 use std::{str::FromStr, sync::Arc};
 
-use crate::connectors::{
-    table_name, CdcType, Connector, SourceSchema, SourceSchemaResult, TableIdentifier,
-};
+use crate::connectors::{table_name, CdcType, Connector, SourceSchema, SourceSchemaResult, TableIdentifier, IngestType};
 use crate::ingestion::Ingestor;
 use crate::{connectors::TableInfo, errors::ConnectorError};
 use dozer_types::ingestion_types::{EthFilter, EthLogConfig};
@@ -199,7 +197,6 @@ impl Connector for EthLogConnector {
                 schema: table.schema,
                 name: table.name,
                 column_names,
-                ingest_type,
             })
         }
         Ok(result)

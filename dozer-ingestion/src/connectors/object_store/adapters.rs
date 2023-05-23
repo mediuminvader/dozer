@@ -39,6 +39,7 @@ pub struct DozerObjectStoreParams<'a, T: ObjectStore> {
     pub table_path: String,
     pub folder: &'a str,
     pub data_fusion_table: &'a Table,
+    pub ingest_type: Option<String>,
 }
 
 impl DozerObjectStore for S3Storage {
@@ -65,6 +66,7 @@ impl DozerObjectStore for S3Storage {
             table_path: format!("s3://{}/{}/", details.bucket_name, table.prefix.clone()),
             folder: &table.prefix,
             data_fusion_table: table,
+            ingest_type: table.ingest_type.clone(),
         })
     }
 
@@ -92,6 +94,7 @@ impl DozerObjectStore for LocalStorage {
             table_path: format!("{path}/{}/", table.prefix.clone()),
             folder: &table.prefix,
             data_fusion_table: table,
+            ingest_type: table.ingest_type.clone(),
         })
     }
 

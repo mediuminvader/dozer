@@ -1,7 +1,7 @@
 use std::time::Duration;
 
 use crate::connectors::snowflake::connection::client::Client;
-use crate::connectors::{Connector, SourceSchemaResult, TableIdentifier, TableInfo};
+use crate::connectors::{Connector, IngestType, SourceSchemaResult, TableIdentifier, TableInfo};
 use crate::errors::ConnectorError;
 use crate::ingestion::Ingestor;
 use dozer_types::ingestion_types::SnowflakeConfig;
@@ -85,7 +85,7 @@ impl Connector for SnowflakeConnector {
                 schema: None,
                 name,
                 column_names,
-                ingest_type,
+                ingest_type: IngestType::default(),
             });
         }
         Ok(result)

@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use dozer_ingestion::connectors::{get_connector, get_connector_info_table, IngestType, TableIdentifier, TableInfo};
+use dozer_ingestion::connectors::{get_connector, get_connector_info_table, TableIdentifier, TableInfo};
 use dozer_types::{
     log::{error, info},
     models::source::Source,
@@ -56,7 +56,6 @@ pub async fn validate_grouped_connections(
                     schema: source.schema.clone(),
                     name: source.table_name.clone(),
                     column_names: source.columns.clone(),
-                    ingest_type: IngestType::default(),
                 })
                 .collect::<Vec<_>>();
             connector.get_schemas(&tables).await.map_or_else(

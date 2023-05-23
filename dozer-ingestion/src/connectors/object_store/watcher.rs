@@ -16,6 +16,9 @@ use crate::{
 };
 
 use std::path::Path;
+use std::str::FromStr;
+use crate::connectors::IngestType;
+use crate::errors::ObjectStoreTableReaderError::MissingTableDataIngestionDetails;
 
 use super::{adapters::DozerObjectStore, table_reader::TableReader};
 
@@ -64,6 +67,10 @@ impl<T: DozerObjectStore> Watcher<T> for TableReader<T> {
         sender: Sender<Result<Option<Operation>, ObjectStoreConnectorError>>,
     ) -> Result<(), ConnectorError> {
         let params = self.config.table_params(&table.name)?;
+        let ingest_type: IngestType =  match params.ingest_type {
+            Some(str) => IngestType::from_str(str.as_str()).map_err(|_| ObjectStoreConnectorError::TableReaderError(MissingTableDataIngestionDetails))?,
+            None => IngestType::default(),
+        };
         let store = Arc::new(params.object_store);
 
         let source_folder = params.folder.to_string();
@@ -99,12 +106,18 @@ impl<T: DozerObjectStore> Watcher<T> for TableReader<T> {
 
                     if let Some(last_modified) = source_state.get_mut(&object.location) {
                         // Scenario 1: Update on existing file
-                        if *last_modified < object.last_modified {
-                            info!(
-                                "Source Object has been modified: {:?}, {:?}",
-                                object.location, object.last_modified
-                            );
+                        match ingest_type {
+                            IngestType::AppendOnly => {
+                                if *last_modified < object.last_modified {
+                                    info!(
+                                        "Source Object has been modified: {:?}, {:?}",
+                                        object.location, object.last_modified
+                                    );
+                                }
+                            }
+                            _ => todo!(),
                         }
+
                     } else {
                         // Scenario 2: New file added
                         info!(
