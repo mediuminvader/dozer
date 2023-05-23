@@ -85,6 +85,7 @@ impl Connector for SnowflakeConnector {
                 schema: None,
                 name,
                 column_names,
+                ingest_type,
             });
         }
         Ok(result)

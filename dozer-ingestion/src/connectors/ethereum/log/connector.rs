@@ -199,6 +199,7 @@ impl Connector for EthLogConnector {
                 schema: table.schema,
                 name: table.name,
                 column_names,
+                ingest_type,
             })
         }
         Ok(result)

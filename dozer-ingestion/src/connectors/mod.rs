@@ -159,6 +159,18 @@ pub struct TableInfo {
     pub name: String,
     /// The column names to be mapped.
     pub column_names: Vec<String>,
+    #[serde(default)]
+    /// Ingestion type
+    pub ingest_type: IngestType,
+}
+
+#[derive(Clone, Copy, Serialize, Deserialize, Debug, Eq, PartialEq, Default)]
+#[serde(crate = "dozer_types::serde")]
+pub enum IngestType {
+    #[default]
+    AppendOnly,
+    MasterFull,
+    MasterIncremental,
 }
 
 pub fn get_connector(connection: Connection) -> Result<Box<dyn Connector>, ConnectorError> {

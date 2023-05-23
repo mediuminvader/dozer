@@ -95,6 +95,7 @@ fn create_connector(
             prefix,
             file_type: "parquet".to_string(),
             extension: ".parquet".to_string(),
+            ingest_type: None,
         }],
     };
     let connector = ObjectStoreConnector::new(0, local_storage);

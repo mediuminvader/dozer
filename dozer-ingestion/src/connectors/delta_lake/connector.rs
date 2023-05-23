@@ -1,9 +1,7 @@
 use crate::connectors::delta_lake::reader::DeltaLakeReader;
 use crate::connectors::delta_lake::schema_helper::SchemaHelper;
 use crate::connectors::delta_lake::ConnectorResult;
-use crate::connectors::{
-    table_name, Connector, ListOrFilterColumns, SourceSchemaResult, TableIdentifier, TableInfo,
-};
+use crate::connectors::{table_name, Connector, ListOrFilterColumns, SourceSchemaResult, TableIdentifier, TableInfo, IngestType};
 use crate::errors::ConnectorError;
 use crate::ingestion::Ingestor;
 use dozer_types::ingestion_types::DeltaLakeConfig;
@@ -87,6 +85,7 @@ impl Connector for DeltaLakeConnector {
                 schema: None,
                 name: table_info.name,
                 column_names,
+                ingest_type: IngestType::default(),
             })
         }
         Ok(result)

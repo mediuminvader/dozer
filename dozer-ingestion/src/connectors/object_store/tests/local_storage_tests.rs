@@ -151,7 +151,7 @@ async fn test_csv_read() {
     }
 
     let mut i = 1;
-    while i < 9 {
+    while i < 19 {
         let row = iterator.next();
         if let Some(IngestionMessage {
             identifier: OpIdentifier { seq_in_tx, .. },
@@ -172,7 +172,7 @@ async fn test_csv_read() {
             test_type_conversion!(values, 8, Field::String(_));
 
             if let Field::Int(id) = values.get(0).unwrap() {
-                if *id < 3 {
+                if *id == 2 || *id == 12 {
                     test_type_conversion!(values, 9, Field::Float(_));
                 } else {
                     test_type_conversion!(values, 9, Field::Null);

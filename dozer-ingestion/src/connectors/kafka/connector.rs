@@ -81,6 +81,7 @@ impl Connector for KafkaConnector {
                 schema: table.schema,
                 name: table.name,
                 column_names,
+                ingest_type,
             });
         }
         Ok(result)

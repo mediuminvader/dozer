@@ -282,6 +282,8 @@ pub struct Table {
     pub file_type: String,
     #[prost(string, tag = "4")]
     pub extension: String,
+    #[prost(string, optional, tag = "5")]
+    pub ingest_type: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Eq, PartialEq, Clone, ::prost::Message, Hash)]

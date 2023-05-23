@@ -12,6 +12,7 @@ pub fn get_local_storage_config(typ: &str) -> LocalStorage {
             prefix: format!("all_types_{typ}"),
             file_type: typ.to_string(),
             extension: typ.to_string(),
+            ingest_type: None,
         }],
     }
 }
