@@ -115,9 +115,9 @@ impl<T: DozerObjectStore> Watcher<T> for TableReader<T> {
                                     );
                                 }
                             }
-                            _ => todo!(),
+                            IngestType::MasterFull => todo!(),
+                            IngestType::MasterIncremental => todo!(),
                         }
-
                     } else {
                         // Scenario 2: New file added
                         info!(
