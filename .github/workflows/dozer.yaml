@@ -1,9 +1,11 @@
 name: Dozer CI
 
 on:
-  pull_request:
-    branches: [main]
-  merge_group:
+  push:
+    branches: [coverage-test]
+  # pull_request:
+  #   branches: [main]
+  # merge_group:
 
 env:
   CARGO_TERM_COLOR: always
