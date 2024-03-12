@@ -137,12 +137,9 @@ mod tests {
     use super::*;
 
     use dozer_types::{
-        chrono::DateTime,
         ordered_float::OrderedFloat,
-        rust_decimal::Decimal,
         types::{FieldDefinition, SourceDefinition},
     };
-    use num_traits::FromPrimitive;
     use proptest::prelude::*;
 
     #[test]
